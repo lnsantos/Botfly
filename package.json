@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/lnsantos/Botfly/issues"
   },
-  "homepage": "https://github.com/lnsantos/Botfly#readme"
+  "homepage": "https://github.com/lnsantos/Botfly#readme",
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
 }
