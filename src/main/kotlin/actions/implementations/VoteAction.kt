@@ -1,12 +1,13 @@
 package actions.implementations
 
 import actions.BotAction
+import data.CacheTemp
 import domain.BotCommand
 import dev.kord.core.entity.ReactionEmoji
 import domain.SimpleDataDomain
 import ext.createResponse
 import ext.getChatDescription
-
+import ext.isCommandValid
 
 internal class VoteAction(
     private val data: SimpleDataDomain
@@ -18,15 +19,27 @@ internal class VoteAction(
     override val command: BotCommand = BotCommand.Vote
 
     override suspend fun onWork() {
-        if (data.messageSplit.size < 2) {
-            data.messageData.channel.createMessage("Envie o comando na maneira correta, colocando !enquete [nome da enquete]")
+        if (data.isCommandValid()) {
+            data.createResponse("Envie o comando na maneira correta, colocando !enquete [nome da enquete]")
             return
         }
 
         val survey = data.getChatDescription()
-        val response = data.createResponse("\n\nIniciando enquete: $survey")
 
-        response.addReaction(yes)
-        response.addReaction(no)
+        CacheTemp.getSecretAnswers(survey)?.let {
+            data.createResponse("""
+                
+                ${it.second}
+               
+                Ass:. DarkBot
+            """.trimIndent())
+            return
+        }
+
+        data.createResponse("\n\nIniciando enquete:\n\n$survey").apply {
+            addReaction(yes)
+            addReaction(no)
+        }
+
     }
 }

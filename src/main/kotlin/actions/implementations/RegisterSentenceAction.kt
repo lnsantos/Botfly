@@ -7,6 +7,7 @@ import domain.BotCommand
 import domain.SimpleDataDomain
 import ext.createResponse
 import ext.getChatDescription
+import ext.isCommandValid
 
 internal class RegisterSentenceAction constructor(
     private val data: SimpleDataDomain
@@ -16,8 +17,8 @@ internal class RegisterSentenceAction constructor(
 
     override suspend fun onWork() {
 
-        if (data.messageSplit.size < 2) {
-            data.messageData.channel.createMessage("Envie o comando na maneira correta, colocando r!frase [frase desejada]")
+        if (data.isCommandValid()) {
+            data.createResponse("Envie o comando na maneira correta, colocando r!frase [frase desejada]")
             return
         }
 

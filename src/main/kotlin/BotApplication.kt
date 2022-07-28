@@ -1,5 +1,6 @@
 import actions.implementations.RandomSentenceAction
 import actions.implementations.RegisterSentenceAction
+import actions.implementations.SecretSentenceAction
 import actions.implementations.VoteAction
 import dev.kord.core.event.message.MessageCreateEvent
 import domain.SimpleDataDomain
@@ -18,7 +19,8 @@ internal class BotApplication constructor(
         arrayListOf(
             VoteAction(simpleDomain),
             RegisterSentenceAction(simpleDomain),
-            RandomSentenceAction(simpleDomain)
+            RandomSentenceAction(simpleDomain),
+            SecretSentenceAction(simpleDomain)
         ).run {
             firstOrNull { it.command thisIsCommand commandChat }?.onWork()
         } ?: println("Command $commandChat not implemented! ;-;")

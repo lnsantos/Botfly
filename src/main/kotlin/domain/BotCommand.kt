@@ -5,7 +5,8 @@ enum class BotCommand(
 )  {
     Vote(command = "!enquete"),
     RegisterSentence(command = "r!frase"),
-    RandomSentence(command = "!frase");
+    RandomSentence(command = "!frase"),
+    SecretSentenceAction(command = "r!resposta");
 
     companion object {
         @JvmStatic
